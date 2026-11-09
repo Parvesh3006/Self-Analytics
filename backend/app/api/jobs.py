@@ -1,6 +1,7 @@
 import csv
 import io
 from typing import Literal
+from urllib.parse import urlencode, urlsplit
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import StreamingResponse
@@ -14,10 +15,19 @@ from ..models import Job, JobSighting, JobSkill, SavedFilter, Skill, Source, utc
 
 router = APIRouter(prefix="/api", tags=["jobs"])
 POSTED = func.coalesce(Job.posted_at, Job.first_seen)
+# These sites put a security check in front of job pages, so a posting link can fail. We never try to get past it.
+PROTECTED_LINK_HOSTS = ("jooble.org", "himalayas.app")
+
+
+def link_may_block(url: str | None) -> bool:
+    host = (urlsplit(url or "").hostname or "").lower()
+    return any(host == h or host.endswith(f".{h}") for h in PROTECTED_LINK_HOSTS)
 
 
 def job_row(job: Job, skills: list[str] | None = None) -> dict:
     return {
+        "link_may_block": link_may_block(job.apply_url),
+        "search_url": "https://www.google.com/search?" + urlencode({"q": f"{job.title} {job.company_name} job"}),
         "id": job.id, "title": job.title, "company": job.company_name, "role_family": job.role_family, "seniority": job.seniority, "country_code": job.country_code, "country": job.country,
         "state": job.state, "city": job.city, "location_raw": job.location_raw, "workplace": job.workplace, "employment_type": job.employment_type, "salary_min": job.salary_min, "salary_max": job.salary_max,
         "salary_currency": job.salary_currency, "salary_period": job.salary_period, "salary_usd_min": job.salary_usd_min, "salary_usd_max": job.salary_usd_max, "posted_at": job.posted_at, "first_seen": job.first_seen,
@@ -68,8 +78,11 @@ def job_detail(job_id: int, db: Session = Depends(get_db)):
         similar = list(db.scalars(select(Job).where(Job.id != job.id, Job.is_active.is_(True), Job.embedding.is_not(None)).order_by(Job.embedding.cosine_distance(job.embedding)).limit(6)))
     else:
         similar = list(db.scalars(select(Job).where(Job.id != job.id, Job.is_active.is_(True), Job.role_family == job.role_family, Job.country_code == job.country_code).order_by(POSTED.desc()).limit(6)))
+    open_link = job.apply_url
+    if link_may_block(open_link):
+        open_link = next((g.url for g, _ in sightings if g.url and not link_may_block(g.url)), open_link)
     return {
-        **job_row(job, skills), "description": job.description, "is_active": job.is_active,
+        **job_row(job, skills), "apply_url": open_link, "link_may_block": link_may_block(open_link), "description": job.description, "is_active": job.is_active,
         "sightings": [{"source": s.name, "url": g.url, "first_seen": g.first_seen, "last_seen": g.last_seen} for g, s in sightings],
         "similar": [job_row(j) for j in similar],
     }

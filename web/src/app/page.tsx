@@ -4,7 +4,7 @@ import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { clsx } from "clsx";
-import { WorldMap } from "@/components/charts";
+import { type MapPlace, WorldMap } from "@/components/charts";
 import { Postmark } from "@/components/postmark";
 import { useMoney } from "@/components/providers";
 import { Empty, ErrorNote, Hint, Notice, PageTitle, Panel, RankBars, Rows } from "@/components/ui";
@@ -36,6 +36,10 @@ export default function MarketsPage() {
 
   const o = overview.data;
   const toggleCountry = (code: string) => f.set("country", (selected.includes(code) ? selected.filter((c) => c !== code) : [...selected, code]).join(",") || null);
+  const pickPlace = (place: MapPlace, level: "state" | "city") => {
+    if (level === "state") f.setMany(f.get("state") === place.name ? { state: null } : { country: place.code, state: place.name });
+    else f.setMany(f.get("city") === place.name ? { city: null } : { country: place.code, state: place.state, city: place.name });
+  };
   // A first crawl finds mostly recent postings, so week-on-week means nothing until two weeks have been collected.
   const collectedDays = status.data?.first_collected ? (Date.now() - new Date(status.data.first_collected).getTime()) / 86_400_000 : 0;
   const change = o && o.prev_7d > 0 && collectedDays >= 14 ? Math.round(((o.new_7d - o.prev_7d) / o.prev_7d) * 100) : null;
@@ -78,8 +82,8 @@ export default function MarketsPage() {
       </section>
 
       <div className="grid xl:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] gap-4 mb-4">
-        <Panel title="Where the jobs are" note="Darker means more open jobs. Select a country to focus every view on it." dimmed={countries.isPlaceholderData}>
-          {countries.isError ? <ErrorNote error={countries.error} retry={countries.refetch} /> : <WorldMap rows={countries.data ?? []} selected={selected} onPick={toggleCountry} />}
+        <Panel title="Where the jobs are" note="Darker means more open jobs. Zoom in for states and cities, where larger circles mean more jobs. Select a place to focus every view on it." dimmed={countries.isPlaceholderData}>
+          {countries.isError ? <ErrorNote error={countries.error} retry={countries.refetch} /> : <WorldMap rows={countries.data ?? []} selected={selected} onPick={toggleCountry} query={f.query} onPlace={pickPlace} />}
         </Panel>
         {singleCountry ? (
           <Panel title="Top states and regions" note="Select one to narrow to it." dimmed={states.isPlaceholderData}>

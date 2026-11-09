@@ -33,7 +33,10 @@ export function useFilters() {
         else next.delete(key);
       }
       // A city or state belongs to a country, so they do not survive a country change.
-      if ("country" in changes) { next.delete("state"); next.delete("city"); }
+      if ("country" in changes) {
+        if (!("state" in changes)) next.delete("state");
+        if (!("city" in changes)) next.delete("city");
+      }
       if ("state" in changes && !("city" in changes)) next.delete("city");
       const text = next.toString();
       router.replace(text ? `${pathname}?${text}` : pathname, { scroll: false });

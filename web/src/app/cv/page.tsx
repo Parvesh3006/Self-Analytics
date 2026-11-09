@@ -143,6 +143,7 @@ function MatchRow({ m, cvId, money }: { m: any; cvId: number; money: (v: number 
           <SourceStamp source={j.source} date={j.last_seen} />
           <span className="flex gap-1.5">
             <button className="btn !h-7 text-xs" disabled={explain.isPending} onClick={() => explain.mutate()}>{explain.isPending ? "Writing..." : "Explain this match"}</button>
+            {j.link_may_block && <a className="btn !h-7 text-xs" href={j.search_url} target="_blank" rel="noreferrer" title="This site may block the posting page">Find this job</a>}
             {j.apply_url && <a className="btn btn-primary !h-7 text-xs" href={j.apply_url} target="_blank" rel="noreferrer">Open posting</a>}
           </span>
         </div>

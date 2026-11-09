@@ -99,6 +99,17 @@ def locations(level: str = Query("state", pattern="^(state|city)$"), f: Filters 
     return [{"name": r.name, "jobs": r.jobs, "median_usd": r.median, "with_salary": r.with_salary} for r in rows]
 
 
+@router.get("/market/map-points")
+def map_points(level: str = Query("state", pattern="^(state|city)$"), f: Filters = Depends(filters_dep), db: Session = Depends(get_db)):
+    """Places to mark on the map. State and city filters are ignored so neighbouring places stay selectable."""
+    column = Job.state if level == "state" else Job.city
+    keys = (Job.country_code, Job.state) if level == "state" else (Job.country_code, Job.state, Job.city)
+    rows = db.execute(apply_filters(select(*keys, func.avg(Job.lat).label("lat"), func.avg(Job.lng).label("lng"), func.count().label("jobs"))
+                                    .where(column.is_not(None), Job.lat.is_not(None), Job.lng.is_not(None)), f, skip=("state", "city"))
+                      .group_by(*keys).order_by(func.count().desc()).limit(500)).all()
+    return [{"name": r.state if level == "state" else r.city, "state": r.state, "code": r.country_code, "lat": round(float(r.lat), 4), "lng": round(float(r.lng), 4), "jobs": r.jobs} for r in rows]
+
+
 @router.get("/market/roles")
 def roles(f: Filters = Depends(filters_dep), db: Session = Depends(get_db)):
     rows = db.execute(apply_filters(select(Job.role_family, func.count().label("jobs"), MEDIAN.label("median"), func.count(Job.salary_usd_min).label("with_salary")), f)

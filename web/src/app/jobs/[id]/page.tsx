@@ -32,7 +32,11 @@ export default function JobPage({ params }: { params: Promise<{ id: string }> })
             <h1 className="text-[1.625rem] leading-tight font-bold tracking-tight">{j.title}</h1>
             <p className="text-[1rem] text-ink-2 mt-0.5">{j.company} · {place(j)}</p>
             {!j.is_active && <div className="mt-3"><Notice tone="warn">This job has not been seen recently and may be closed.</Notice></div>}
-            {j.apply_url && <a href={j.apply_url} target="_blank" rel="noreferrer" className="btn btn-primary mt-3">Open original posting<ExternalLink size={14} aria-hidden /></a>}
+            <div className="flex flex-wrap gap-2 mt-3">
+              {j.apply_url && <a href={j.apply_url} target="_blank" rel="noreferrer" className="btn btn-primary">Open original posting<ExternalLink size={14} aria-hidden /></a>}
+              {j.link_may_block && <a href={j.search_url} target="_blank" rel="noreferrer" className="btn">Find this job<ExternalLink size={14} aria-hidden /></a>}
+            </div>
+            {j.link_may_block && <p className="panel-note mt-2">This site may show a security check or block the page. If it does, use Find this job to search for the same role.</p>}
           </Panel>
           <Panel title="Skills named in this job">
             <div className="flex flex-wrap gap-1">{j.skills.map((s: string) => <Link key={s} className="chip hover:border-air-blue" href={`/jobs?skill=${encodeURIComponent(s)}`}>{s}</Link>)}{j.skills.length === 0 && <span className="panel-note">None recognised in this posting.</span>}</div>
