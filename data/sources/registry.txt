@@ -1,0 +1,378 @@
+# Source registry. Sections: [section|kind|default region]
+# Rows: name|url|region|strategy|adapter
+# Blank region uses the section default. Strategy values:
+#   api      official or public API / feed adapter
+#   auto     probed: JSON-LD, then RSS, then polite crawl, or blocked by robots.txt
+#   blocked  terms prohibit automated collection, or the site is behind bot protection
+#   insight  trend or statistics site: summarised for the assistant, not counted as vacancies
+#   discover platform or community with no feed of its own (boards are discovered through it)
+#   none     not a job source (resource, directory, or duplicate landing page)
+
+[Your first source|job_board|Worldwide]
+TrueUp|https://trueup.io/||auto|
+
+[Global job portals|job_board|Worldwide]
+LinkedIn Jobs|https://www.linkedin.com/jobs/||blocked|
+Indeed|https://www.indeed.com/||blocked|
+Glassdoor|https://www.glassdoor.com/Job/||blocked|
+Google Jobs|https://www.google.com/search?q=software+engineer+jobs||blocked|
+Jooble|https://jooble.org/||api|jooble
+Adzuna|https://www.adzuna.com/||api|adzuna
+Careerjet|https://www.careerjet.com/||api|careerjet
+Talent.com|https://www.talent.com/||auto|
+Monster|https://www.monster.com/||blocked|
+ZipRecruiter|https://www.ziprecruiter.com/|United States|blocked|
+SimplyHired|https://www.simplyhired.com/||blocked|
+CareerBuilder|https://www.careerbuilder.com/|United States|blocked|
+The Muse|https://www.themuse.com/|United States|api|muse
+Jobrapido|https://www.jobrapido.com/||auto|
+Neuvoo|https://neuvoo.com/||auto|
+JobisJob|https://www.jobisjob.com/||auto|
+
+[Technology job portals|job_board|Worldwide]
+Dice|https://www.dice.com/|United States|auto|
+Wellfound|https://wellfound.com/jobs||blocked|
+Built In|https://builtin.com/jobs|United States|auto|
+TechFetch|https://www.techfetch.com/|United States|auto|
+GermanTechJobs|https://germantechjobs.de/|Germany|auto|
+SwissDevJobs|https://swissdevjobs.ch/|Switzerland|auto|
+DevITjobs|https://devitjobs.uk/|United Kingdom|auto|
+No Fluff Jobs|https://nofluffjobs.com/|Poland|auto|
+Echojobs|https://echojobs.io/||auto|
+Findwork|https://findwork.dev/||api|findwork
+Landing.jobs|https://landing.jobs/|Europe|auto|
+Get on Board|https://www.getonbrd.com/|Latin America|api|getonbrd
+Hired|https://hired.com/||auto|
+Levels.fyi Jobs|https://www.levels.fyi/jobs/||auto|
+Welcome to the Jungle|https://www.welcometothejungle.com/|Europe|auto|
+Technojobs|https://www.technojobs.co.uk/|United Kingdom|auto|
+TechCareers|https://www.techcareers.com/|United States|auto|
+
+[Remote technology portals|job_board|Remote]
+Remote OK|https://remoteok.com/||api|remoteok
+We Work Remotely|https://weworkremotely.com/||api|weworkremotely
+Remotive|https://remotive.com/||api|remotive
+Himalayas|https://himalayas.app/jobs||api|himalayas
+Working Nomads|https://www.workingnomads.com/jobs||api|workingnomads
+Jobicy|https://jobicy.com/jobs||api|jobicy
+Remote.co|https://remote.co/remote-jobs/||auto|
+FlexJobs|https://www.flexjobs.com/||auto|
+JustRemote|https://justremote.co/||auto|
+Remote First Jobs|https://remotefirstjobs.com/||auto|
+NoDesk|https://nodesk.co/remote-jobs/||auto|
+Jobspresso|https://jobspresso.co/||auto|
+4 Day Week|https://4dayweek.io/||auto|
+PowerToFly|https://powertofly.com/||auto|
+Virtual Vocations|https://www.virtualvocations.com/|United States|auto|
+
+[AI, machine learning and data|job_board|Worldwide]
+AI Jobs|https://aijobs.net/||auto|
+AI-Jobs.net|https://ai-jobs.net/||auto|
+ML Jobs|https://mljobs.com/||auto|
+DataJobs|https://datajobs.com/|United States|auto|
+KDnuggets Jobs|https://www.kdnuggets.com/jobs||auto|
+Hugging Face Jobs|https://huggingface.co/jobs||auto|
+Kaggle|https://www.kaggle.com/||none|
+DeepLearning.AI|https://www.deeplearning.ai/||none|
+Data Elixir|https://dataelixir.com/||none|
+
+[Cybersecurity portals|job_board|United States]
+CyberSecJobs|https://www.cybersecjobs.com/||auto|
+CyberSecurityJobs|https://www.cybersecurityjobs.com/|United Kingdom|auto|
+CyberSN|https://www.cybersn.com/||auto|
+ClearedJobs|https://clearedjobs.net/||auto|
+Infosec Jobs|https://infosec-jobs.com/|Worldwide|auto|
+Security Clearance Jobs|https://www.securityclearancejobs.com/||auto|
+
+[Cloud, DevOps and programming|job_board|Worldwide]
+DevOpsJobs|https://devopsjobs.io/||auto|
+Kubernetes Jobs|https://kubernetesjobs.com/||auto|
+Android Jobs|https://androidjobs.io/||auto|
+iOS Dev Jobs|https://iosdevjobs.com/||auto|
+Ruby Now|https://www.rubynow.com/||auto|
+Python Jobs|https://www.python.org/jobs/||api|pythonjobs
+Go Jobs|https://golang.cafe/||auto|
+PHP Jobs|https://www.phpjobs.com/||auto|
+JS Remotely|https://jsremotely.com/||auto|
+Frontend Mentor Jobs|https://www.frontendmentor.io/||none|
+
+[Freelance and contract|freelance|Worldwide]
+Upwork|https://www.upwork.com/||blocked|
+Freelancer|https://www.freelancer.com/||auto|
+Toptal|https://www.toptal.com/||none|
+Fiverr|https://www.fiverr.com/||blocked|
+Guru|https://www.guru.com/||auto|
+PeoplePerHour|https://www.peopleperhour.com/||auto|
+Contra|https://contra.com/||auto|
+Braintrust|https://www.usebraintrust.com/||auto|
+
+[India portals|job_board|India]
+Naukri|https://www.naukri.com/||blocked|
+Foundit|https://www.foundit.in/||auto|
+Instahyre|https://www.instahyre.com/||auto|
+Cutshort|https://cutshort.io/||auto|
+Hirist|https://www.hirist.tech/||auto|
+iimjobs|https://www.iimjobs.com/||auto|
+Internshala|https://internshala.com/||auto|
+Freshersworld|https://www.freshersworld.com/||auto|
+Shine|https://www.shine.com/||auto|
+TimesJobs|https://www.timesjobs.com/||auto|
+Hasjob|https://hasjob.co/||auto|
+Apna|https://apna.co/||auto|
+WorkIndia|https://www.workindia.in/||auto|
+Superset|https://joinsuperset.com/||none|
+Placement India|https://www.placementindia.com/||auto|
+
+[USA and Canada|job_board|United States]
+USAJOBS|https://www.usajobs.gov/||api|usajobs
+CareerOneStop|https://www.careeronestop.org/||auto|
+Workopolis|https://www.workopolis.com/|Canada|auto|
+Job Bank Canada|https://www.jobbank.gc.ca/|Canada|auto|
+Eluta|https://www.eluta.ca/|Canada|auto|
+Jobboom|https://www.jobboom.com/|Canada|auto|
+TechJobs.ca|https://www.techjobs.ca/|Canada|auto|
+Talent.com Canada|https://ca.talent.com/|Canada|auto|
+
+[United Kingdom and Ireland|job_board|United Kingdom]
+Reed|https://www.reed.co.uk/||api|reed
+Totaljobs|https://www.totaljobs.com/||auto|
+CV-Library|https://www.cv-library.co.uk/||auto|
+CWJobs|https://www.cwjobs.co.uk/||auto|
+NHS Jobs|https://www.jobs.nhs.uk/||auto|
+GOV.UK Find a Job|https://findajob.dwp.gov.uk/||auto|
+IrishJobs|https://www.irishjobs.ie/|Ireland|auto|
+Jobs.ie|https://www.jobs.ie/|Ireland|auto|
+ComputerJobs.ie|https://www.computerjobs.ie/|Ireland|auto|
+
+[Europe|job_board|Europe]
+StepStone|https://www.stepstone.de/|Germany|auto|
+XING Jobs|https://www.xing.com/jobs|Germany|blocked|
+Arbeitnow|https://www.arbeitnow.com/|Germany|api|arbeitnow
+Jobware|https://www.jobware.de/|Germany|auto|
+Bundesagentur für Arbeit|https://www.arbeitsagentur.de/jobsuche/|Germany|api|arbeitsagentur
+France Travail|https://www.francetravail.fr/|France|api|francetravail
+Apec|https://www.apec.fr/|France|auto|
+Indeed France|https://fr.indeed.com/|France|blocked|
+Nationale Vacaturebank|https://www.nationalevacaturebank.nl/|Netherlands|auto|
+Werk.nl|https://www.werk.nl/|Netherlands|auto|
+IamExpat Jobs|https://www.iamexpat.nl/career/jobs|Netherlands|auto|
+EURES|https://eures.europa.eu/|European Union|auto|
+EuroJobs|https://www.eurojobs.com/||auto|
+Jobs.ch|https://www.jobs.ch/|Switzerland|auto|
+Jobup|https://www.jobup.ch/|Switzerland|auto|
+Finn.no Jobs|https://www.finn.no/job/|Norway|auto|
+Jobindex|https://www.jobindex.dk/|Denmark|auto|
+Duunitori|https://duunitori.fi/|Finland|auto|
+Pracuj.pl|https://www.pracuj.pl/|Poland|auto|
+Just Join IT|https://justjoin.it/|Poland|auto|
+Djinni|https://djinni.co/|Ukraine|auto|
+Habr Career|https://career.habr.com/|Russia|auto|
+HeadHunter|https://hh.ru/|Russia|auto|
+
+[Asia-Pacific and Middle East|job_board|Asia-Pacific]
+SEEK|https://www.seek.com.au/|Australia|blocked|
+Jora|https://au.jora.com/|Australia|blocked|
+Workforce Australia|https://www.workforceaustralia.gov.au/|Australia|auto|
+CareerOne|https://www.careerone.com.au/|Australia|auto|
+EthicalJobs|https://www.ethicaljobs.com.au/|Australia|auto|
+JobsDB|https://hk.jobsdb.com/|Hong Kong|blocked|
+JobStreet|https://www.jobstreet.com/|Southeast Asia|blocked|
+MyCareersFuture|https://www.mycareersfuture.gov.sg/|Singapore|api|mycareersfuture
+JobsCentral|https://jobscentral.com.sg/|Singapore|auto|
+FastJobs|https://www.fastjobs.sg/|Singapore|auto|
+Wantedly|https://www.wantedly.com/|Japan|auto|
+Green Japan|https://www.green-japan.com/|Japan|auto|
+Daijob|https://www.daijob.com/|Japan|auto|
+CareerCross|https://www.careercross.com/|Japan|auto|
+Mynavi|https://tenshoku.mynavi.jp/|Japan|auto|
+Rakuten Career|https://corp.rakuten.co.jp/careers/|Japan|auto|
+Jobs in Japan|https://jobsinjapan.com/|Japan|auto|
+JobThai|https://www.jobthai.com/|Thailand|auto|
+JobsDB Thailand|https://th.jobsdb.com/|Thailand|blocked|
+JobStreet Malaysia|https://www.jobstreet.com.my/|Malaysia|blocked|
+JobStreet Philippines|https://www.jobstreet.com.ph/|Philippines|blocked|
+Kalibrr|https://www.kalibrr.com/|Southeast Asia|auto|
+JobNet|https://www.jobnet.com.mm/|Myanmar|auto|
+BDJobs|https://www.bdjobs.com/|Bangladesh|auto|
+Bayt|https://www.bayt.com/|Middle East|auto|
+GulfTalent|https://www.gulftalent.com/|Middle East|auto|
+Naukrigulf|https://www.naukrigulf.com/|Middle East|blocked|
+Qatar Living Jobs|https://www.qatarliving.com/jobs|Qatar|auto|
+Akhtaboot|https://www.akhtaboot.com/|Middle East|auto|
+
+[Latin America and Africa|job_board|Latin America]
+Bumeran|https://www.bumeran.com/||auto|
+Computrabajo|https://www.computrabajo.com/||auto|
+Catho|https://www.catho.com.br/|Brazil|auto|
+InfoJobs Brazil|https://www.infojobs.com.br/|Brazil|auto|
+Gupy|https://www.gupy.io/|Brazil|auto|
+Konzerta|https://www.konzerta.com/||auto|
+Torre|https://torre.ai/|Worldwide|auto|
+Jobberman|https://www.jobberman.com/|Africa|auto|
+BrighterMonday|https://www.brightermonday.co.ke/|Kenya|auto|
+PNet|https://www.pnet.co.za/|South Africa|auto|
+Careers24|https://www.careers24.com/|South Africa|auto|
+MyJobMag|https://www.myjobmag.com/|Africa|auto|
+Fuzu|https://www.fuzu.com/|Africa|auto|
+
+[ATS platforms (employer boards are discovered)|ats_platform|Worldwide]
+Greenhouse|https://www.greenhouse.io/||discover|greenhouse
+Lever|https://www.lever.co/||discover|lever
+Ashby|https://www.ashbyhq.com/||discover|ashby
+Workday|https://www.workday.com/||none|
+SmartRecruiters|https://www.smartrecruiters.com/||discover|smartrecruiters
+Workable|https://www.workable.com/||discover|workable
+iCIMS|https://www.icims.com/||none|
+Jobvite|https://www.jobvite.com/||none|
+BambooHR|https://www.bamboohr.com/||none|
+SAP SuccessFactors|https://www.sap.com/products/hcm.html||none|
+Oracle Recruiting|https://www.oracle.com/human-capital-management/recruiting/||none|
+Recruitee|https://recruitee.com/||discover|recruitee
+Teamtailor|https://www.teamtailor.com/||none|
+Personio|https://www.personio.com/||none|
+
+[Employer career sites|employer|Worldwide]
+Google Careers|https://www.google.com/about/careers/applications/||blocked|
+Microsoft Careers|https://careers.microsoft.com/||auto|
+Amazon Jobs|https://www.amazon.jobs/||auto|
+Apple Careers|https://www.apple.com/careers/||auto|
+Meta Careers|https://www.metacareers.com/||blocked|
+NVIDIA Careers|https://www.nvidia.com/en-us/about-nvidia/careers/||auto|
+Intel Careers|https://www.intel.com/content/www/us/en/jobs/jobs-at-intel.html||auto|
+AMD Careers|https://www.amd.com/en/corporate/careers.html||auto|
+Qualcomm Careers|https://www.qualcomm.com/company/careers||auto|
+IBM Careers|https://www.ibm.com/careers||auto|
+Oracle Careers|https://www.oracle.com/careers/||auto|
+SAP Jobs|https://jobs.sap.com/||auto|
+Salesforce Careers|https://careers.salesforce.com/||auto|
+Adobe Careers|https://careers.adobe.com/||auto|
+Cisco Jobs|https://jobs.cisco.com/||auto|
+Dell Jobs|https://jobs.dell.com/||auto|
+HP Jobs|https://jobs.hp.com/||auto|
+Samsung Careers|https://www.samsungcareers.com/||auto|
+Sony Jobs|https://www.sonyjobs.com/||auto|
+NVIDIA Workday Board|https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite||auto|
+Tesla Careers|https://www.tesla.com/careers||blocked|
+SpaceX Careers|https://www.spacex.com/careers/||auto|
+GitHub Careers|https://www.github.careers/||auto|
+Netflix Jobs|https://jobs.netflix.com/||auto|
+Uber Careers|https://www.uber.com/global/en/careers/||auto|
+Booking.com Careers|https://careers.booking.com/||auto|
+Shopify Careers|https://www.shopify.com/careers||auto|
+Revolut Careers|https://www.revolut.com/careers/||auto|
+Wise Jobs|https://wise.jobs/||auto|
+
+[Labour statistics and research|statistics|Worldwide]
+OECD Skills for Jobs|https://www.oecd.org/en/data/dashboards/skills-for-jobs.html||insight|
+UNESCO Global Skills Tracker|https://connect.unevoc.unesco.org/home/Global+Skills+Tracker/lang=en||insight|
+Cedefop Skills-OVATE|https://www.cedefop.europa.eu/en/tools/skills-online-vacancies|Europe|insight|
+Lightcast|https://lightcast.io/||insight|
+Burning Glass Institute|https://www.burningglassinstitute.org/|United States|insight|
+World Economic Forum|https://www.weforum.org/||insight|
+World Bank Data|https://data.worldbank.org/||insight|
+ILOSTAT|https://ilostat.ilo.org/||insight|
+Eurostat|https://ec.europa.eu/eurostat|Europe|insight|
+US Bureau of Labor Statistics|https://www.bls.gov/|United States|insight|
+O*NET Online|https://www.onetonline.org/|United States|insight|
+OECD Employment|https://www.oecd.org/en/topics/employment.html||insight|
+Statistics Canada|https://www.statcan.gc.ca/|Canada|insight|
+Australian Bureau of Statistics|https://www.abs.gov.au/|Australia|insight|
+Jobs and Skills Australia|https://www.jobsandskills.gov.au/|Australia|insight|
+UK Office for National Statistics|https://www.ons.gov.uk/|United Kingdom|insight|
+UK Skills and Productivity Board|https://www.gov.uk/|United Kingdom|none|
+India PLFS (MoSPI)|https://www.mospi.gov.in/|India|insight|
+CMIE|https://www.cmie.com/|India|insight|
+NASSCOM|https://nasscom.in/|India|insight|
+
+[Data platforms|dataset|Worldwide]
+Techmap Job Data Explorer|https://jobdatafeeds.com/data||none|
+Alion Labour Market Data|https://alion.io/data||none|
+Zorky|https://zorky.tech/en||none|
+Jobs of the World|https://jotw.theigc.org/||insight|
+OECD Adzuna AI Jobs Data|https://oecd.ai/en/adzuna/||insight|
+Kaggle Datasets|https://www.kaggle.com/datasets||none|
+Google Dataset Search|https://datasetsearch.research.google.com/||none|
+Hugging Face Datasets|https://huggingface.co/datasets||none|
+
+[Developer communities|community|Worldwide]
+Hacker News Who is Hiring|https://news.ycombinator.com/||api|hn_hiring
+Hacker News Search|https://hn.algolia.com/||none|
+Reddit|https://www.reddit.com/||none|
+r/forhire|https://www.reddit.com/r/forhire/||blocked|
+r/RemoteJobs|https://www.reddit.com/r/RemoteJobs/||blocked|
+r/cscareerquestions|https://www.reddit.com/r/cscareerquestions/||none|
+Lobsters|https://lobste.rs/||none|
+GitHub|https://github.com/||none|
+Dev.to|https://dev.to/||none|
+Hashnode|https://hashnode.com/||none|
+
+[Australia: IT recruiters|recruiter|Australia]
+Finite|https://www.finite.com.au/||auto|
+Hays IT Australia|https://www.hays.com.au/jobs/it-jobs/||auto|
+Peoplebank|https://www.peoplebank.com.au/||auto|
+Paxus|https://www.paxus.com.au/||auto|
+Ignite|https://www.igniteco.com/||auto|
+Akkodis Australia|https://www.akkodis.com/en-au||auto|
+SR2|https://www.sr2.com/||auto|
+Nigel Frank|https://www.nigelfrank.com/||auto|
+Morgan McKinley Australia|https://www.morganmckinley.com/au||auto|
+Charterhouse|https://www.charterhouse.com.au/||auto|
+NES Fircroft|https://www.nesfircroft.com/||auto|
+TechForce|https://www.techforce.com.au/||auto|
+Talent Street|https://www.talentstreet.com.au/||auto|
+Whizdom|https://www.whizdom.com.au/||auto|
+Cooper Lomaz|https://www.cooperlomaz.com.au/||auto|
+
+[Australia: engineering|job_board|Australia]
+EngineeringJobs.com.au|https://www.engineeringjobs.com.au/||auto|
+Engineers Australia|https://www.engineersaustralia.org.au/||none|
+Australian Engineering Jobs|https://www.australianengineeringjobs.com.au/||auto|
+rEngineeringJobs|https://www.rengineeringjobs.com/||auto|
+Airtasker|https://www.airtasker.com/||none|
+SEEK Engineering|https://www.seek.com.au/engineering-jobs||blocked|
+Careers in Energy|https://www.careersinenergy.com.au/||auto|
+Energy Jobline|https://www.energyjobline.com/||auto|
+Rail Careers|https://www.railcareers.net.au/||auto|
+
+[Australia: graduates and internships|job_board|Australia]
+GradConnection|https://au.gradconnection.com/||auto|
+Graduate Opportunities|https://www.graduateopportunities.com/||auto|
+GraduatePrograms|https://www.graduateprograms.com.au/||auto|
+Student Edge|https://www.studentedge.org/||auto|
+CareerHub|https://www.careerhub.com.au/||none|
+The Forage|https://www.theforage.com/||none|
+GraduateJobs.com.au|https://www.graduatejobs.com.au/||auto|
+Careers Victoria|https://www.careers.vic.gov.au/||auto|
+
+[Australia: government|government|Australia]
+I Work for NSW|https://iworkfor.nsw.gov.au/||auto|
+Jobs Victoria Public Sector|https://jobs.careers.vic.gov.au/||auto|
+SmartJobs Queensland|https://smartjobs.qld.gov.au/||auto|
+I Work for SA|https://iworkfor.sa.gov.au/||auto|
+WA Government Jobs|https://search.jobs.wa.gov.au/||auto|
+NT Government Jobs|https://jobs.nt.gov.au/||auto|
+Tasmanian Government Careers|https://careers.tas.gov.au/||auto|
+ACT Government Jobs|https://jobs.act.gov.au/||auto|
+
+[Australia: other boards|job_board|Australia]
+LiveHire|https://www.livehire.com/||none|
+Work in Paradise|https://www.workinparadise.com.au/||auto|
+Jobs.com.au|https://www.jobs.com.au/||auto|
+PublicJobs|https://www.publicjobs.com.au/||auto|
+OzJobs|https://www.ozjobs.com.au/||auto|
+ApplyNow|https://www.applynow.net.au/||none|
+Student Job Board|https://www.studentjobboard.com.au/||auto|
+FlexCareers|https://www.flexcareers.com.au/||auto|
+Toozly|https://www.toozly.com.au/||auto|
+Weploy|https://www.weployapp.com/||none|
+
+[Australia: research and statistics|statistics|Australia]
+Jobs and Skills Australia Data|https://www.jobsandskills.gov.au/data||insight|
+DEWR|https://www.dewr.gov.au/||insight|
+Your Career|https://www.yourcareer.gov.au/||insight|
+National Skills Commission|https://www.nationalskillscommission.gov.au/||insight|
+ABS Labour Statistics|https://www.abs.gov.au/statistics/labour||insight|
+Skills Priority List|https://www.nationalskillscommission.gov.au/skills-priority-list||insight|
+NCVER|https://www.ncver.edu.au/||insight|
+ACS|https://www.acs.org.au/||insight|
+Australian Careers Service|https://www.australiancareersservice.com.au/||insight|

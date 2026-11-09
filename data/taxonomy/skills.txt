@@ -1,0 +1,224 @@
+# Category: Name = alias, alias
+# Aliases are matched on word boundaries, case-insensitively. Name is matched too.
+[Languages]
+Python
+JavaScript = js, ecmascript
+TypeScript = ts
+Java
+Kotlin
+Scala
+C++ = cpp
+C# = csharp, c sharp
+Go = golang
+Rust
+Ruby
+PHP
+Swift
+Objective-C = objc
+Dart
+R = r programming, r language
+SQL
+Bash = shell scripting
+PowerShell
+Perl
+MATLAB
+Elixir
+Clojure
+Haskell
+Lua
+Solidity
+COBOL
+VBA
+Assembly
+Verilog
+VHDL
+Embedded C
+[Frontend]
+React = react.js, reactjs
+Next.js = nextjs
+Vue = vue.js, vuejs
+Nuxt = nuxt.js
+Angular = angularjs
+Svelte
+HTML = html5
+CSS = css3
+Tailwind CSS = tailwind
+Sass = scss
+Redux
+GraphQL
+Webpack
+Vite
+Three.js = threejs
+WebAssembly = wasm
+[Backend]
+Node.js = nodejs, node
+Express = express.js, expressjs
+NestJS = nest.js
+Django
+Flask
+FastAPI
+Spring Boot = springboot
+Spring
+.NET = dotnet, asp.net
+Ruby on Rails = rails
+Laravel
+Symfony
+gRPC
+REST APIs = rest api, restful, restful api
+Microservices = microservice
+Kafka = apache kafka
+RabbitMQ
+Celery
+WebSockets = websocket
+[Mobile]
+iOS
+Android
+React Native
+Flutter
+SwiftUI
+Jetpack Compose
+[Data]
+PostgreSQL = postgres
+MySQL
+SQL Server = mssql, microsoft sql server
+Oracle Database = oracle db, pl/sql
+MongoDB
+Redis
+Elasticsearch = elastic search
+Cassandra
+DynamoDB
+Snowflake
+BigQuery
+Redshift
+Databricks
+Spark = apache spark, pyspark
+Hadoop
+Hive
+Airflow = apache airflow
+dbt
+Flink = apache flink
+ETL = elt
+Data Modeling = data modelling
+Data Warehousing = data warehouse
+Pandas
+NumPy
+Excel = microsoft excel
+Power BI = powerbi
+Tableau
+Looker
+Qlik
+SAS
+Stata
+Statistics = statistical analysis
+A/B Testing = ab testing
+[AI and ML]
+Machine Learning = ml
+Deep Learning
+PyTorch
+TensorFlow
+Keras
+scikit-learn = sklearn
+XGBoost
+NLP = natural language processing
+Computer Vision
+LLM = llms, large language models, large language model
+Generative AI = genai, gen ai
+RAG = retrieval augmented generation
+LangChain
+LangGraph
+Prompt Engineering
+Hugging Face = huggingface
+MLOps
+Reinforcement Learning
+OpenCV
+Vector Databases = vector database, pgvector, pinecone
+[Cloud and DevOps]
+AWS = amazon web services
+Azure = microsoft azure
+GCP = google cloud, google cloud platform
+Docker
+Kubernetes = k8s
+Terraform
+Ansible
+Helm
+Jenkins
+GitHub Actions
+GitLab CI
+CI/CD = cicd, continuous integration
+Linux
+Nginx
+Prometheus
+Grafana
+Datadog
+Serverless
+Lambda = aws lambda
+SRE = site reliability
+Git
+OpenShift
+VMware
+[Security]
+Cybersecurity = cyber security, information security, infosec
+Penetration Testing = pentest, pen testing, penetration tester
+SIEM
+SOC = security operations
+Splunk
+IAM = identity and access management
+OWASP
+ISO 27001
+NIST
+Zero Trust
+Threat Modeling = threat modelling
+Cryptography
+[Enterprise]
+SAP
+Salesforce
+ServiceNow
+Workday
+Oracle ERP = oracle fusion
+Dynamics 365 = microsoft dynamics
+SharePoint
+Jira
+Confluence
+[Testing]
+Selenium
+Cypress
+Playwright
+Jest
+pytest
+Test Automation = automated testing, automation testing
+QA = quality assurance
+[Engineering]
+AutoCAD
+SolidWorks
+CATIA
+Revit
+ANSYS
+PLC = plc programming
+SCADA
+PCB Design = pcb
+FPGA
+RTOS
+Embedded Systems = embedded software, firmware
+IoT = internet of things
+Robotics
+ROS
+Six Sigma
+Lean Manufacturing
+BIM
+HVAC
+Power Systems
+CAN Bus = canbus
+[Practice]
+Agile
+Scrum
+Kanban
+Project Management = pmp
+Product Management
+Stakeholder Management
+System Design = systems design
+Distributed Systems
+Data Structures
+Figma
+UX Research = user research
+Technical Writing
+Business Analysis

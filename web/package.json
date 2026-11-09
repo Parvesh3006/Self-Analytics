@@ -1,0 +1,33 @@
+{
+  "name": "self-analytics-web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3100",
+    "build": "next build",
+    "start": "next start -p 3000"
+  },
+  "dependencies": {
+    "@radix-ui/react-popover": "1.1.15",
+    "@tanstack/react-query": "5.107.1",
+    "@tanstack/react-table": "8.21.3",
+    "clsx": "2.1.1",
+    "cmdk": "1.1.1",
+    "echarts": "6.1.0",
+    "lucide-react": "1.70.0",
+    "next": "16.4.5",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "topojson-client": "3.1.0",
+    "world-atlas": "2.0.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.3.5",
+    "@types/node": "22.19.1",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "@types/topojson-client": "3.1.5",
+    "tailwindcss": "4.3.5",
+    "typescript": "5.9.3"
+  }
+}

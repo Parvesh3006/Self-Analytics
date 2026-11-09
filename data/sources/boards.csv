@@ -1,0 +1,67 @@
+company,ats,token
+Anthropic,greenhouse,anthropic
+Stripe,greenhouse,stripe
+Cloudflare,greenhouse,cloudflare
+Datadog,greenhouse,datadog
+Airbnb,greenhouse,airbnb
+GitLab,greenhouse,gitlab
+Databricks,greenhouse,databricks
+Figma,greenhouse,figma
+Discord,greenhouse,discord
+Reddit,greenhouse,reddit
+Twilio,greenhouse,twilio
+Coinbase,greenhouse,coinbase
+Robinhood,greenhouse,robinhood
+Instacart,greenhouse,instacart
+Dropbox,greenhouse,dropbox
+Pinterest,greenhouse,pinterest
+Lyft,greenhouse,lyft
+Okta,greenhouse,okta
+MongoDB,greenhouse,mongodb
+Elastic,greenhouse,elastic
+HashiCorp,greenhouse,hashicorp
+Vercel,greenhouse,vercel
+Asana,greenhouse,asana
+Airtable,greenhouse,airtable
+Brex,greenhouse,brex
+Gusto,greenhouse,gusto
+Duolingo,greenhouse,duolingo
+Zscaler,greenhouse,zscaler
+Samsara,greenhouse,samsara
+Toast,greenhouse,toast
+Intercom,greenhouse,intercom
+Canva,greenhouse,canva
+Airwallex,greenhouse,airwallex
+SafetyCulture,greenhouse,safetyculture
+Culture Amp,greenhouse,cultureamp
+Rippling,greenhouse,rippling
+Waymo,greenhouse,waymo
+Scale AI,greenhouse,scaleai
+Grafana Labs,greenhouse,grafanalabs
+Mistral AI,lever,mistral
+Spotify,lever,spotify
+Palantir,lever,palantir
+Atlassian,lever,atlassian
+Plaid,lever,plaid
+Binance,lever,binance
+Kraken,lever,kraken
+Zeta,lever,zeta
+OpenAI,ashby,openai
+Notion,ashby,notion
+Linear,ashby,linear
+Ramp,ashby,ramp
+Snowflake,ashby,snowflake
+Cohere,ashby,cohere
+Perplexity,ashby,perplexity
+Replit,ashby,replit
+Supabase,ashby,supabase
+Deel,ashby,deel
+Harvey,ashby,harvey
+ElevenLabs,ashby,elevenlabs
+Visa,smartrecruiters,Visa
+Bosch,smartrecruiters,BoschGroup
+Wise,smartrecruiters,Wise
+ServiceNow,smartrecruiters,ServiceNow
+Sixt,smartrecruiters,Sixt
+Delivery Hero,smartrecruiters,DeliveryHero
+Western Digital,smartrecruiters,WesternDigital

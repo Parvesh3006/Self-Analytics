@@ -1,0 +1,95 @@
+﻿# Self Analytics. Ollama runs natively on the host (see CLAUDE.md), reached via host.docker.internal.
+# Start the data services only:  docker compose up -d db redis
+# Start everything:              docker compose --profile app up -d --build
+x-backend: &backend
+  image: self_analytics-backend
+  build: ./backend
+  env_file: .env
+  environment:
+    DATABASE_URL: postgresql+psycopg://selfanalytics:selfanalytics@db:5432/selfanalytics
+    REDIS_URL: redis://redis:6379/0
+    OLLAMA_URL: http://host.docker.internal:11434
+    SEARXNG_URL: http://searxng:8080
+    DATA_DIR: /data
+  extra_hosts: ["host.docker.internal:host-gateway"]
+  volumes: ["./data:/data"]
+  depends_on:
+    db: { condition: service_healthy }
+    redis: { condition: service_healthy }
+  restart: unless-stopped
+
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: selfanalytics
+      POSTGRES_PASSWORD: selfanalytics
+      POSTGRES_DB: selfanalytics
+    # Host port 5544: 5432/5433 are taken by other projects on this machine.
+    ports: ["127.0.0.1:5544:5432"]
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+    command: ["postgres", "-c", "shared_buffers=256MB", "-c", "work_mem=32MB", "-c", "max_connections=40"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U selfanalytics"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    mem_limit: 1g
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--maxmemory", "128mb", "--maxmemory-policy", "noeviction"]
+    ports: ["127.0.0.1:6380:6379"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    mem_limit: 192m
+    restart: unless-stopped
+
+  searxng:
+    image: searxng/searxng:latest
+    profiles: ["app"]
+    ports: ["127.0.0.1:8888:8080"]
+    environment:
+      SEARXNG_SECRET: ${SEARXNG_SECRET:-local-only-instance}
+    volumes: ["./infra/searxng:/etc/searxng"]
+    mem_limit: 384m
+    restart: unless-stopped
+
+  api:
+    <<: *backend
+    profiles: ["app"]
+    command: sh -c "alembic upgrade head && python -m app.cli bootstrap && uvicorn app.main:app --host 0.0.0.0 --port 8000"
+    ports: ["127.0.0.1:8100:8000"]
+    mem_limit: 1g
+
+  worker:
+    <<: *backend
+    profiles: ["app"]
+    # One process at a time: 16 GB laptop, and Playwright is memory hungry.
+    command: celery -A app.tasks worker --concurrency=2 --loglevel=INFO --max-tasks-per-child=20
+    mem_limit: 2g
+
+  beat:
+    <<: *backend
+    profiles: ["app"]
+    command: celery -A app.tasks beat --loglevel=INFO --schedule=/tmp/celerybeat-schedule
+    mem_limit: 256m
+
+  web:
+    build:
+      context: ./web
+      args:
+        BACKEND_URL: http://api:8000
+    profiles: ["app"]
+    ports: ["127.0.0.1:3100:3000"]
+    depends_on: [api]
+    mem_limit: 768m
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+

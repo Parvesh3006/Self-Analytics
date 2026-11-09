@@ -1,0 +1,14 @@
+.env
+.env.neon
+.venv/
+__pycache__/
+*.pyc
+node_modules/
+.next/
+web/next-env.d.ts
+data/geonames/
+data/uploads/
+.impeccable/questions/
+.impeccable/mocks/
+.impeccable/review/
+*.log
