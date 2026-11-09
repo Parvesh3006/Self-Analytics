@@ -7,13 +7,8 @@ from ..config import get_settings
 from ..normalize.text import html_to_text
 from .base import Blocked, NeedsKey, RawJob, adapter, get_json, number, parse_date
 
-# Adzuna does not cover Ireland; Jooble and the ATS boards do.
-ADZUNA_COUNTRIES = {
-    "au": "AUD", "ca": "CAD", "us": "USD", "in": "INR", "gb": "GBP", "nz": "NZD", "sg": "SGD", "de": "EUR", "fr": "EUR",
-    "nl": "EUR", "at": "EUR", "be": "EUR", "ch": "CHF", "es": "EUR", "it": "EUR", "pl": "PLN",
-}
-PRIORITY_LOCATIONS = ["Australia", "Canada", "United States", "India", "United Kingdom", "Ireland", "New Zealand", "Singapore",
-                      "Germany", "France", "Netherlands", "Spain", "Italy", "Poland", "Sweden", "Switzerland"]
+ADZUNA_COUNTRIES = {"au": "AUD", "ca": "CAD", "us": "USD", "in": "INR", "nz": "NZD"}
+PRIORITY_LOCATIONS = ["Australia", "Canada", "United States", "India", "New Zealand"]
 SEARCH_TERMS = ["software engineer", "data", "developer", "cloud", "cyber security", "engineer"]
 
 

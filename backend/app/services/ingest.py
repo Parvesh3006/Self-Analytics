@@ -18,6 +18,12 @@ from ..normalize.titles import role_family, seniority
 
 MAX_DESCRIPTION = 20000
 BATCH = 200
+# The only countries this app keeps. Jobs with no known country are not affected.
+ALLOWED_COUNTRIES = ("US", "AU", "IN", "CA", "NZ")
+# Employer boards return every open job, so a job missing from them was removed by the employer.
+# Search and "latest" feeds return only part of a site, so a job missing from those proves nothing.
+FULL_LIST_ADAPTERS = ["greenhouse", "lever", "ashby", "smartrecruiters", "workable", "recruitee"]
+ABSENT_RUNS = 2
 
 
 def sync_skills(db: Session) -> None:
@@ -72,6 +78,8 @@ class Ingestor:
         title = raw.title.strip()[:400]
         company = (raw.company or "Unknown").strip()[:300] or "Unknown"
         place = self.resolver.resolve(raw.location, raw.country_code)
+        if place.country_code and place.country_code not in ALLOWED_COUNTRIES:
+            return
         workplace = raw.workplace or infer_workplace(raw.location, title, raw.remote)
 
         salary_min, salary_max, currency, period = raw.salary_min, raw.salary_max, raw.salary_currency, raw.salary_period
@@ -155,11 +163,39 @@ def _visa(description: str) -> bool | None:
     return None
 
 
-def expire_stale(db: Session, days: int = 21) -> int:
-    cutoff = utcnow() - timedelta(days=days)
-    result = db.execute(update(Job).where(Job.is_active.is_(True), (Job.last_seen < cutoff) | (Job.valid_through < utcnow())).values(is_active=False))
+def delete_closed(db: Session) -> int:
+    """Permanently delete closed jobs. Sightings and skills go with them through the foreign keys.
+
+    Closed means the deadline has passed (dates are often stored as midnight, so the last day still counts), or the
+    employer removed it: it is on a full-list board and has been missing from that board's last successful runs.
+    Runs that failed or returned nothing do not count, so an idle laptop or a broken board cannot delete anything.
+    """
+    result = db.execute(text("""
+        DELETE FROM jobs j
+        WHERE j.valid_through < now() - interval '1 day'
+           OR (EXISTS (SELECT 1 FROM job_sightings s JOIN sources o ON o.id = s.source_id
+                       WHERE s.job_id = j.id AND o.adapter = ANY(:adapters))
+               AND NOT EXISTS (
+                   SELECT 1 FROM job_sightings s JOIN sources o ON o.id = s.source_id
+                   WHERE s.job_id = j.id AND o.adapter = ANY(:adapters)
+                     AND (SELECT count(*) FROM crawl_runs r
+                          WHERE r.source_id = s.source_id AND r.status = 'ok' AND r.seen > 0 AND r.started_at > s.last_seen) < :runs))
+    """), {"adapters": FULL_LIST_ADAPTERS, "runs": ABSENT_RUNS})
+    _delete_orphan_companies(db)
     db.commit()
     return result.rowcount
+
+
+def delete_outside_markets(db: Session) -> int:
+    """Permanently delete jobs in countries this app does not keep."""
+    result = db.execute(delete(Job).where(Job.country_code.is_not(None), Job.country_code.notin_(ALLOWED_COUNTRIES)))
+    _delete_orphan_companies(db)
+    db.commit()
+    return result.rowcount
+
+
+def _delete_orphan_companies(db: Session) -> None:
+    db.execute(text("DELETE FROM companies c WHERE NOT EXISTS (SELECT 1 FROM jobs j WHERE j.company_id = c.id)"))
 
 
 def merge_near_duplicates(db: Session, since: datetime | None = None) -> int:
@@ -188,4 +224,4 @@ def merge_near_duplicates(db: Session, since: datetime | None = None) -> int:
     return merged
 
 
-__all__ = ["Ingestor", "sync_skills", "refresh_fx", "fingerprint", "expire_stale", "merge_near_duplicates", "datetime", "timezone"]
+__all__ = ["Ingestor", "sync_skills", "refresh_fx", "fingerprint", "delete_closed", "delete_outside_markets", "merge_near_duplicates", "datetime", "timezone"]

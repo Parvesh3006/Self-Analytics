@@ -11,7 +11,7 @@ from .models import GeoPlace, Source
 from .normalize.geo import load_geonames
 from .services.discovery import discover_boards
 from .services.embeddings import embed_pending
-from .services.ingest import expire_stale, refresh_fx, sync_skills
+from .services.ingest import delete_closed, delete_outside_markets, refresh_fx, sync_skills
 from .services.sources import due_sources, probe_source, run_source, seed_registry
 
 
@@ -92,7 +92,8 @@ def main() -> None:
     elif args.command == "maintain":
         with session_scope() as db:
             refresh_fx(db)
-            print("expired", expire_stale(db))
+            print("closed jobs deleted", delete_closed(db))
+            print("jobs outside kept countries deleted", delete_outside_markets(db))
 
 
 if __name__ == "__main__":

@@ -14,9 +14,12 @@ Companion docs: `README.md` (how to run), `DESIGN.md` (visual system), `PRODUCT.
 
 ---
 
-## Current status (last updated 2026-11-08)
+## Current status (last updated 2026-11-09)
 
-**Built and working locally on real data. Waiting on the user to supply API keys.** Not deployed anywhere. Not a git repository; nothing has been committed.
+**Built and working locally on real data. Vercel deployment is in progress and not live.** Code is on GitHub (`Parvesh3006/Self-Analytics`, branch `main`, commit `d02de0a`). A full copy of the database is on the user's Neon project (`self-analytics`, Singapore, Free plan), but the app still uses the local database.
+
+### Update 2026-11-09
+18,118 jobs and 2,299 companies on both local (301 MB) and Neon (291 MB); 2,606 vectors. United States 12,508, India 1,095, Canada 928, Australia 270, New Zealand 11, no known country 3,306. Only those five countries are kept. Collection is off for Arbeitnow, Delivery Hero, France Travail, MyCareersFuture and Reed because they list jobs elsewhere. The tables below are the 2026-11-08 figures and are out of date.
 
 ### Data snapshot
 | Measure | Value |
@@ -100,7 +103,11 @@ Blocked: Akhtaboot, Bayt, BDJobs, Bundesagentur für Arbeit, CareerBuilder, Care
 13. Independent design finish review: it was done in-thread, not by the separate reviewer.
 
 ### API keys
-Status on 2026-11-09: filled in `.env` but not yet tested: Jooble, USAJOBS, Reed, Findwork, Tavily, Groq (`LLM_FALLBACK=groq`). Careerjet and France Travail both require a live website URL, so they wait for the Vercel deployment. Adzuna is held back for cost. Gemini, OpenRouter and Brave are not needed. `APP_PASSWORD` is still empty and must be set before hosting. Neon is not set up yet.
+Status on 2026-11-09: tested and working: Findwork, Reed, USAJOBS, Jooble (real runs), Tavily (one search; `discover` not run yet), Groq through `llm.py` with Ollama off (`LLM_FALLBACK=groq`). Careerjet and France Travail both require a live website URL, so they wait for the Vercel deployment. Adzuna is held back for cost. Gemini, OpenRouter and Brave are not needed. `APP_PASSWORD` must be set before hosting. The Neon connection string is in `.env.neon` (git-ignored).
+
+Jooble does not fill Australia or New Zealand: a live "software engineer / Australia" search returned a total of 11 results, and the run added 23 Australian jobs and no New Zealand jobs. `au.` and `nz.jooble.org` returned 403 for this key. Adzuna remains the likely route for those two markets.
+
+Vercel plan (not built yet): one project using Services, Next.js in `web/` and FastAPI in `backend/`, region `sin1`, on the user's own Vercel account. The connected Vercel and Neon tools belong to a different account (Buildify), so they cannot see this project. Needed first: `vercel.json`, make `data/taxonomy/skills.txt` available to the backend bundle, smaller database pool. Whether Hobby allows Services is unconfirmed. Collection stays on the laptop.
 
 Set in `.env`. Pricing notes from 2026-11-09:
 - **Adzuna is paid.** The sign-up page the user saw gives 25 test calls until activation, then £8/month for 5,000 calls a month and 500 a day. A full `adzuna` adapter run is up to 160 calls (16 countries x 2 categories x 5 pages), so a normal run would use up the test calls. The user has not decided whether to pay.
@@ -201,6 +208,16 @@ WHERE js.job_id = j.id AND js.skill_id = s.id AND s.name ~ '^[A-Za-z]{5,}$'
 
 - The web server had stopped after the session's last check, because it was tied to a shell that ended. It was restarted as a detached process. `Get-NetTCPConnection` and `netstat` proved unreliable for checking port 3100 here; use `curl http://127.0.0.1:3100/`.
 
+### 2026-11-09
+- User confirmed Vercel hosting, added API keys, created the Neon project, and pushed the first commit to GitHub.
+- Adzuna found to be paid. Brave's free tier reported gone, so Tavily is used.
+- Fixed the Groq model in `llm.py` (the old name no longer exists; now `qwen/qwen3.8-27b`). Included in the first commit.
+- Real runs added new jobs: Findwork 1,710, Reed 3,098, USAJOBS 4,075, Jooble 1,125.
+- Copied the database to Neon with `pg_dump` in a single transaction and compared row counts for every table.
+- Small gap seen: "Italian Republic" and "Kingdom of Spain" from Jooble do not resolve to a country.
+- User decision: closed jobs are permanently deleted, replacing "expired jobs are kept as history". `delete_closed` in `ingest.py` replaces `expire_stale`. User rule (final): delete when the deadline passed more than a day ago, or when the employer removed the job. Removal is only provable on full-list boards (`FULL_LIST_ADAPTERS`: missing from `ABSENT_RUNS` = 2 later `ok` runs with `seen > 0`). A job known only from search or "latest" feeds is deleted only by deadline. It runs from `maintain` (daily under Celery Beat; native mode needs `python -m app.cli maintain`). Tested in a rolled-back transaction on the local database. Not pushed yet.
+- User decision: keep only US, AU, IN, CA, NZ. `delete_outside_markets` removed 17,552 jobs from local and Neon, and `Ingestor.add` refuses other countries. The user chose to keep jobs with no known country (3,306, mostly worldwide remote), because remote work matters to them. `geo_*` tables are kept because the resolver needs them to recognise and refuse other countries.
+
 ---
 
 ## Key design decisions (from analysis)
@@ -284,7 +301,7 @@ MVP with real data on the dashboard = Phases 0–4 (~4–5 weeks part-time).
 
 1. The list of URLs. 2. Hardware. 3. Whether a cloud LLM fallback is acceptable. 4. Priority countries and roles.
 
-Still unanswered, and defaulted: salary display currency (a selector in the app, default USD) and data retention (expired jobs are kept as history).
+Still unanswered, and defaulted: salary display currency (a selector in the app, default USD). Data retention was answered on 2026-11-09: closed jobs are deleted.
 
 ## Answers
 
@@ -307,7 +324,7 @@ User: **anything free of cost is fine.** → Local Ollama is the default; free-t
 User supplied about 340 URLs (319 after removing duplicates): global, tech, remote, AI/data, security, DevOps, freelance, regional boards, ATS platforms, employer career sites, labour statistics, data platforms, communities, and an Australia-specific list. They live in `data/sources/` and are classified per decision 1.
 
 ### Q4 — Priority markets (answered 2026-11-08)
-Australia, Canada, USA, India, UK, Europe, Singapore, New Zealand, Ireland, each down to every state and city. Worldwide coverage still required.
+Superseded on 2026-11-09: only USA, Australia, India, Canada and New Zealand, each down to every state and city. Other countries are not stored. (Originally also UK, Europe, Singapore and Ireland, with worldwide coverage.)
 
 ### Other decisions (2026-11-08)
 - Single user, no login. Equal main jobs: compare countries, find best jobs from a CV, track skill trends.

@@ -9,7 +9,7 @@ from .db import session_scope
 from .models import Source
 from .services.discovery import discover_boards
 from .services.embeddings import embed_pending
-from .services.ingest import expire_stale, refresh_fx
+from .services.ingest import delete_closed, delete_outside_markets, refresh_fx
 from .services.sources import due_sources, probe_source, run_source
 
 log = logging.getLogger(__name__)
@@ -78,7 +78,8 @@ def embed_task() -> int:
 def maintain() -> None:
     with session_scope() as db:
         refresh_fx(db)
-        expire_stale(db)
+        delete_closed(db)
+        delete_outside_markets(db)
 
 
 @celery.task(name="app.tasks.discover", time_limit=3600)
